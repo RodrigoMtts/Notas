@@ -27,6 +27,10 @@ const Styles = StyleSheet.create({
         color: whiteColor,
         fontSize: 30,
         alignSelf: 'center'
+    },
+    archiveAlarmIcon:{
+        color: whiteColor,
+        marginHorizontal: 5
     }
 })
 

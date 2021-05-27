@@ -51,7 +51,7 @@ export default class Home extends Component {
             <Button style={{ backgroundColor: '#0237d8' }}>
               <Icon name="camera-outline" />
             </Button>
-            <Button style={{ backgroundColor: '#0237d8' }}>
+            <Button onPress={() => this.props.navigation.navigate('Nova Nota')} style={{ backgroundColor: '#0237d8' }}>
               <Icon name="document-text-outline" />
             </Button>
           </Fab>

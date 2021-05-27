@@ -3,8 +3,8 @@ import { Button, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Home from './src/pages/Home/Index'
-import CameraScreen from './src/pages/CameraScreen/index'
+import Home from './src/pages/Home'
+import NewNote from './src/pages/NewNote'
 
 const Drawer = createDrawerNavigator();
 
@@ -14,8 +14,8 @@ export default class App extends React.Component {
     return (
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={Home} />
-          <Drawer.Screen name="CameraScreen" component={CameraScreen} />
+          <Drawer.Screen name="Início" component={Home} />
+          <Drawer.Screen name="Nova Nota" component={NewNote} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
