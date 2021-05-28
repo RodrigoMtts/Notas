@@ -6,6 +6,7 @@ import Home from './src/pages/Home'
 import NewNote from './src/pages/NewNote'
 import Edit from './src/pages/Edit'
 import Archived from './src/pages/Archived'
+import Camera from './src/components/Camera';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,6 +20,7 @@ export default class App extends React.Component {
           <Drawer.Screen name="Nova Nota" component={NewNote} />
           <Drawer.Screen name="Editar" component={Edit} />
           <Drawer.Screen name="Arquivados" component={Archived} />
+          <Drawer.Screen name="Camera" component={Camera} />
         </Drawer.Navigator>
       </NavigationContainer>
     );

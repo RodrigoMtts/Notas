@@ -15,11 +15,12 @@ const Styles = StyleSheet.create({
     },
     titleCard:{
         fontSize: 18,
-        color: whiteColor
+        color: whiteColor,
+        padding: 10
     },
     bodyCard:{
         fontSize: 14,
-        paddingHorizontal: 18,
+        paddingHorizontal: 10,
         paddingBottom: 10,
         color: whiteColor
     },

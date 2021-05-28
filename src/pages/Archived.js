@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, ActionSheet, Title, Fab, Button, Icon, Item, Input, Text, Content, Card, CardItem, View, Root } from 'native-base';
+import { Image, TouchableHighlight, TouchableHighlightComponent } from 'react-native'
 import Styles from '../styles/Styles'
 import DataBase from '../services/DataBase'
 
@@ -13,9 +14,10 @@ var BUTTONS = [
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
 
-export default class Archived extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props)
+    this.db = new DataBase()
     this.noteSelected = '';
     this.state = {
       active: false,
@@ -40,7 +42,7 @@ export default class Archived extends Component {
                 <Icon style={Styles.menu} name="menu" />
               </Button>
               <Input placeholder="Search" placeholderTextColor={'#a2a2a3'} />
-              <Icon name="ios-people" />
+              <Icon name="search-outline" />
             </Item>
             <Button transparent>
               <Text>Search</Text>
@@ -49,51 +51,101 @@ export default class Archived extends Component {
           <Content padder style={Styles.majorColor}>
             {this.state.notes.filter(note => note.archived).map((note) => {
               console.log(note.id + "  **********   Olha a nota OLAHSHSHSHSSHSHSHS    - - - - - - - - - -  dsdhsuj")
-              //this.noteSelected = note;
-              return (
-                <Card>
-                  {console.log(note.title + "  ---- ///----//-----/// ===== ")}
-                  <CardItem header button note={note} onLongPress={() => ActionSheet.show(
-                    {
-                      options: BUTTONS,
-                      cancelButtonIndex: CANCEL_INDEX,
-                      destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                      title: "Opções",
-                      style: { backgroundColor: "#29292b" }
-                    },
-                    buttonIndex => {
-                      console.log(note.title + "  ---- //////// ===== ")
-                      switch (BUTTONS[buttonIndex].icon) {
-                        case 'create-outline':
-                          console.log(note.title + "  ---- //////// ===== ")
-                          this.props.navigation.navigate("Editar",{note: note})
-                          break;
-                        case 'alarm-outline':
-                          alert(note.title)
-                          break;
-                        case 'archive-outline':          
-                          let db = new DataBase()
-                          db.archiveAndUnarchiveNote(note.id,note.archived)
-                          break;
-                        case 'trash':
-                          db.deleteNote(note.id)
-                          break;
-                        default:
-                          break;
+              //this.noteSelected = note;length
+              if (note.image.length > 3) {
+                console.log(note.image + "OOOOOLLLLLLOOOOOOOLLLLL +++++ ------ ****** ///// Olha a imagem no if else")
+                return (
+                  <View style={{marginVertical: 10}}>
+                    <TouchableHighlight 
+                      note={note} 
+                      onPress={() => this.props.navigation.navigate("Editar", { note: note })} style={Styles.majorColor}
+                      onLongPress={() => ActionSheet.show(
+                      {
+                        options: BUTTONS,
+                        cancelButtonIndex: CANCEL_INDEX,
+                        destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                        title: "Opções",
+                        style: { backgroundColor: "#29292b"}
+                      },
+                      buttonIndex => {
+                        console.log(note.title + "  ---- //////// ===== ")
+                        switch (BUTTONS[buttonIndex].icon) {
+                          case 'create-outline':
+                            console.log(note.title + "  ---- //////// ===== ")
+                            this.props.navigation.navigate("Editar", { note: note })
+                            break;
+                          case 'alarm-outline':
+                            alert(note.title)
+                            break;
+                          case 'archive-outline':
+                            this.db.archiveAndUnarchiveNote(note.id, note.archived)
+                            break;
+                          case 'trash':
+                            this.db.deleteNote(note.id)
+                            break;
+                          default:
+                            break;
+                        }
                       }
-                    }
-                  )} onPress={() => alert("This is Card Header")} style={Styles.majorColor}>
-                    <Text style={Styles.titleCard}>{note.title}</Text>
-                  </CardItem>
-                  <CardItem cardBody style={Styles.majorColor}>
-                    <Body>
+                    )}>
+                      <View style={{borderWidth: 1,borderRadius: 7, borderColor: '#fff'}}>
+                      <Image  source={{uri: note.image}} style={{ height: 200, padding: 0, margin: 0, borderRadius: 7}}></Image>
+                      <Text style={Styles.titleCard}>{note.title}</Text>
                       <Text style={Styles.bodyCard}>
-                        {note.content}
-                      </Text>
-                    </Body>
-                  </CardItem>
-                </Card>
-              );
+                          {note.content}
+                        </Text>
+                        </View>
+                    </TouchableHighlight>
+                  </View>
+                );
+              } else {
+                return (
+                  <View style={{marginVertical: 10}}>
+                    <TouchableHighlight 
+                      note={note} 
+                      onPress={() => this.props.navigation.navigate("Editar", { note: note })} style={Styles.majorColor}
+                      onLongPress={() => ActionSheet.show(
+                      {
+                        options: BUTTONS,
+                        cancelButtonIndex: CANCEL_INDEX,
+                        destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                        title: "Opções",
+                        style: { backgroundColor: "#29292b" }
+                      },
+                      buttonIndex => {
+                        console.log(note.title + "  ---- //////// ===== ")
+                        switch (BUTTONS[buttonIndex].icon) {
+                          case 'create-outline':
+                            console.log(note.title + "  ---- //////// ===== ")
+                            this.props.navigation.navigate("Editar", { note: note })
+                            break;
+                          case 'alarm-outline':
+                            alert(note.title)
+                            break;
+                          case 'archive-outline':
+                            this.db.archiveAndUnarchiveNote(note.id, note.archived)
+                            break;
+                          case 'trash':
+                            this.db.deleteNote(note.id)
+                            break;
+                          default:
+                            break;
+                        }
+                      }
+                    )}>
+                      <View style={{borderWidth: 1,borderRadius: 7, borderColor: '#fff'}}>
+                      
+                      <Text style={Styles.titleCard}>{note.title}</Text>
+                      <Text style={Styles.bodyCard}>
+                          {note.content}
+                        </Text>
+                        </View>
+                    </TouchableHighlight>
+                    
+                  </View>
+
+                );
+              }
             })}
           </Content>
           <View >
@@ -105,14 +157,13 @@ export default class Archived extends Component {
               position="bottomRight"
               onPress={() => this.setState({ active: !this.state.active })}>
               <Icon name="add-outline" style={{ fontSize: 40 }} />
-              <Button style={{ backgroundColor: '#0237d8' }}>
+              <Button onPress={() => this.props.navigation.navigate('Camera')} style={{ backgroundColor: '#0237d8' }}>
                 <Icon name="camera-outline" />
               </Button>
               <Button onPress={() => this.props.navigation.navigate('Nova Nota')} style={{ backgroundColor: '#0237d8' }}>
                 <Icon name="document-text-outline" />
               </Button>
             </Fab>
-
           </View>
         </Container>
       </Root>

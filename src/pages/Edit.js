@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Header, Left, Body, Right, Title, Subtitle, Button, Icon, Form, Input, Item, Textarea } from 'native-base';
+import {Image, TextInput} from 'react-native'
 import Styles from '../styles/Styles'
 import DataBase from '../services/DataBase'
 export default class Edit extends Component {
@@ -14,7 +15,7 @@ export default class Edit extends Component {
             image: this.props.route.params.note.image,
             alarm: this.props.route.params.note.alarm
         }
-        console.log(this.props.route.params.note.titlef + "   ----- AAADKoapoiduspoifuasopifoifhio --------- dsoçdçsojdapoj   --------")
+        console.log(this.props.route.params.note.image + "   ----- AAADKoapoiduspoifuasopifoifhio --------- dsoçdçsojdapoj   --------")
     }
     captureTitle(title) {
         this.setState({ title: title })
@@ -52,6 +53,7 @@ export default class Edit extends Component {
     }
 
     render() {
+        if(this.state.image.length > 10){
         return (
             <Container>
                 <Header style={Styles.header}>
@@ -69,13 +71,43 @@ export default class Edit extends Component {
                         </Button>
                     </Right>
                 </Header>
+                <Content>
+                    <Image style={{width: 400, height: 300}} source={{uri: this.state.image}}></Image>
+                </Content>
                 <Content padder style={Styles.majorColor}>
                     <Form>
-                        <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" style={{ fontSize: 20 }} onChangeText={(title) => this.captureTitle(title)} />
-                        <Textarea value={this.state.content} rowSpan={5} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} />
+                        <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" style={{ fontSize: 20 }} onChangeText={(title) => this.captureTitle(title)} style={{ fontSize: 20, color: '#eee' }}/>
+                        <Textarea value={this.state.content} rowSpan={7} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
                     </Form>
                 </Content>
             </Container>
         );
+        }else{
+            return (
+                <Container>
+                    <Header style={Styles.header}>
+                        <Left>
+                            <Button transparent onPress={() => this.saveAndBack()}>
+                                <Icon name='arrow-back' />
+                            </Button>
+                        </Left>
+                        <Right>
+                            <Button transparent onPress={() => this.saveAndBack()}>
+                                <Icon name="alarm-outline" style={Styles.archiveAlarmIcon} />
+                            </Button>
+                            <Button transparent onPress={() => this.setState({archived: !this.state.archived})}>
+                                <Icon name="archive-outline" style={Styles.archiveAlarmIcon} />
+                            </Button>
+                        </Right>
+                    </Header>
+                    <Content padder style={Styles.majorColor}>
+                        <Form>
+                            <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" onChangeText={(title) => this.captureTitle(title)} style={{ fontSize: 20, color: '#eee' }}/>
+                            <Textarea value={this.state.content} rowSpan={7} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
+                        </Form>
+                    </Content>
+                </Container>
+            );
+        }
     }
 }
