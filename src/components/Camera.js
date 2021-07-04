@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-na
 
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from "@react-native-community/cameraroll";
-import Database from '../services/DataBase';
 
 class Camera extends PureComponent {
     constructor(props) {
@@ -45,19 +44,31 @@ class Camera extends PureComponent {
     }
 
     takePicture = async () => {
+         
+        
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@ &&&&&&&$$$$$$####### - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        this.props.route.params.update()
+        // notes().bind(this.props.route.params.dis)
         if (this.camera) {
             const options = { quality: 1 };
             const data = await this.camera.takePictureAsync(options).then(data => {
                 // Ira abrir uma pequena notificação para o usuário saber que a imagem foi salva
                 ToastAndroid.show(data.uri, ToastAndroid.SHORT);
-
                 //Salva a imagem
                 CameraRoll.save(data.uri);
                 //Manda a uri da imagem para a view de criação de nota
-                this.props.navigation.navigate("Nova Nota",{uri: data.uri})
-
+                this.props.route.params.setImage(data.uri)
+                let image = data.uri
+                let imageUri = data.uri
+                data.uri = ''
+                console.log(image + 'PAPAPAPAPAPAPPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAPAP')
+                this.props.navigation.navigate("Nova Nota",{
+                    uri: data.uri,
+                    update: this.props.route.params.update,
+                    image: image,
+                    setImage: this.props.route.params.setImage
+                })
             });
-
         }
     };
 }

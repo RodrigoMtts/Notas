@@ -88,7 +88,7 @@ export default class Database {
     }
 
     noteById(id) {
-        console.log(id);
+        console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP ------ ------     - - - - - : ID: '+ id);
         return new Promise((resolve) => {
             this.initDB().then((db) => {
                 db.transaction((tx) => {

@@ -6,7 +6,6 @@ import DataBase from '../services/DataBase'
 export default class NewNote extends Component {
     constructor(props) {
         super(props)
-        //console.log(this.props.route.params.uri + "PPPPPP OOOOOOOOOO AAAAAAAAAA EEEEEEEEEEE ------ Olha a imagem")
         this.db = new DataBase();
         try {
             this.state = {
@@ -25,7 +24,6 @@ export default class NewNote extends Component {
                 alarm: ''
             }
         }
-        console.log(this.state.image + "PPPPPP OOOOOOOOOO AAAAAAAAAA EEEEEEEEEEE ------ Olha a imagem no state")
     }
 
     captureTitle(title) {
@@ -36,21 +34,20 @@ export default class NewNote extends Component {
     }
     saveAndBack() {
         //salva no banco se não estiver vazia
-        if (this.state.title.length > 0 || this.state.content.length > 0 || this.state.image.length > 0) {
+        if (this.state.title.length > 0 || this.state.content.length > 0 || this.props.route.params.image.length > 0) {
             let note = {
                 title: this.state.title,
                 content: this.state.content,
                 archived: this.state.archived,
-                image: this.state.image,
+                image: this.props.route.params.image,
                 alarm: this.state.alarm
             }
-            console.log(note.title + " TITLE DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ")
-            console.log(note.content + " contewnt DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ")
-            console.log(note.archived + " archved DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ")
-            console.log(note.image + " Imagem DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ")
-            console.log(note.alarm + " alarm DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ")
+            this.setState({title: ''}),
+            this.setState({content: ''}),
+            this.setState({archived: false})
+            this.setState({image: ''})
             this.db.addNote(note)
-            console.log('salvou a nota')
+            // this.props.route.params.update()
         }
         this.props.navigation.navigate("Início")
     }
@@ -59,7 +56,7 @@ export default class NewNote extends Component {
     }
 
     render() {
-        if (this.state.image.length > 10) {
+        if (this.props.route.params.image.length > 10) {
             return (
                 <Container>
                     <Header style={Styles.header}>
@@ -78,12 +75,12 @@ export default class NewNote extends Component {
                         </Right>
                     </Header>
                     <Content>
-                        <Image style={{ width: 400, height: 300 }} source={{ uri: this.state.image }}></Image>
+                        <Image style={{ width: 400, height: 300 }} source={{ uri: this.props.route.params.image }}></Image>
                     </Content>
                     <Content padder style={Styles.majorColor}>
                         <Form>
-                            <Input placeholder="Título" placeholderTextColor="#a2a2a3" style={{ fontSize: 20, color: '#eee' }} onChangeText={(title) => this.captureTitle(title)} />
-                            <Textarea rowSpan={5} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
+                            <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" style={{ fontSize: 20, color: '#eee' }} onChangeText={(title) => this.captureTitle(title)} />
+                            <Textarea value={this.state.content} rowSpan={5} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
                         </Form>
                     </Content>
                 </Container>
@@ -108,8 +105,8 @@ export default class NewNote extends Component {
                 </Header>
                 <Content padder style={Styles.majorColor}>
                     <Form>
-                        <Input placeholder="Título" placeholderTextColor="#a2a2a3" onChangeText={(title) => this.captureTitle(title)} style={{ fontSize: 20, color: '#eee' }}/>
-                        <Textarea rowSpan={5} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
+                        <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" onChangeText={(title) => this.captureTitle(title)} style={{ fontSize: 20, color: '#eee' }}/>
+                        <Textarea value={this.state.content} rowSpan={5} placeholder="Nota" placeholderTextColor="#a2a2a3" onChangeText={(content) => this.captureContent(content)} style={{ fontSize: 16, color: '#eee' }}/>
                     </Form>
                 </Content>
             </Container>
