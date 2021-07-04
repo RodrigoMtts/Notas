@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Content, Header, Left, Right, Button, Icon, Form, Input, Textarea } from 'native-base';
-import { Image } from 'react-native'
+import { Image, StatusBar } from 'react-native'
 import Styles from '../styles/Styles'
 import DataBase from '../services/DataBase'
 
@@ -41,6 +41,9 @@ export default function Edit({navigation, route}) {
                     </Left>
                     <Right></Right>
                 </Header>
+                <StatusBar
+        hidden
+      />
                 <Content>
                     <Image style={{ width: 400, height: 300 }} source={{ uri: note.image }}></Image>
                 </Content>
@@ -63,6 +66,9 @@ export default function Edit({navigation, route}) {
                     </Left>
                     <Right></Right>
                 </Header>
+                <StatusBar
+        hidden
+      />
                 <Content padder style={Styles.majorColor}>
                     <Form>
                         <Input value={note.title} placeholder="Título" placeholderTextColor="#a2a2a3" onChangeText={(title) => captureTitle(title)} style={{ fontSize: 20, color: '#eee' }} />

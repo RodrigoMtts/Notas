@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, ActionSheet, Header, Fab, Button, Icon, Item, Input, Text, Content, View, Root } from 'native-base';
-import { Image, TouchableHighlight } from 'react-native'
+import { Image, TouchableHighlight, StatusBar } from 'react-native'
 import Styles from '../styles/Styles'
 import DataBase from '../services/DataBase'
 
@@ -70,6 +70,9 @@ export default function Home({ navigation }) {
             <Text>Search</Text>
           </Button>
         </Header>
+        <StatusBar
+        hidden
+      />
         <Content padder style={Styles.majorColor}>
           {notes.filter(note => !note.archived).map((note) => {
             if (note.image.length > 3) {

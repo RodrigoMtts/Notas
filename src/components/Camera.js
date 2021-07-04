@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ToastAndroid, StatusBar } from 'react-native';
 
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from "@react-native-community/cameraroll";
@@ -11,6 +11,9 @@ class Camera extends PureComponent {
     render() {
         return (
             <View style={styles.container}>
+                <StatusBar
+        hidden
+      />
                 <RNCamera
                     ref={ref => {
                         this.camera = ref;

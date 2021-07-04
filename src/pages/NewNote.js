@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Header, Left, Right, Button, Icon, Form, Input, Textarea } from 'native-base';
-import { Image } from 'react-native'
+import { Image, StatusBar } from 'react-native'
 import Styles from '../styles/Styles'
 import DataBase from '../services/DataBase'
 export default class NewNote extends Component {
@@ -74,6 +74,9 @@ export default class NewNote extends Component {
                             </Button>
                         </Right>
                     </Header>
+                    <StatusBar
+        hidden
+      />
                     <Content>
                         <Image style={{ width: 400, height: 300 }} source={{ uri: this.props.route.params.image }}></Image>
                     </Content>
@@ -103,6 +106,9 @@ export default class NewNote extends Component {
                         </Button>
                     </Right>
                 </Header>
+                <StatusBar
+        hidden
+      />
                 <Content padder style={Styles.majorColor}>
                     <Form>
                         <Input value={this.state.title} placeholder="Título" placeholderTextColor="#a2a2a3" onChangeText={(title) => this.captureTitle(title)} style={{ fontSize: 20, color: '#eee' }}/>
